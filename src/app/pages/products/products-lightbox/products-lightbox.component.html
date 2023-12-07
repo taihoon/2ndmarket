@@ -1,0 +1,19 @@
+<div class="ion-page">
+  <ion-header>
+    <ion-toolbar color="dark">
+      <ion-title>{{ title }}</ion-title>
+      <ion-buttons slot="end">
+        <ion-icon (click)="onClickClose()" name="close-outline"></ion-icon>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content color="dark">
+    <ul #list class="w-full h-full overflow-x-auto flex scroll-snap-x">
+      @for (image of images; track $index) {
+        <li class="scroll-snap-start min-w-full h-full p-px">
+          <img [src]="image" class="w-full h-full object-contain" alt="" />
+        </li>
+      }
+    </ul>
+  </ion-content>
+</div>

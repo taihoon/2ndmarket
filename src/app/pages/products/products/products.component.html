@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      @if (group$ | async; as group) {
+        세컨드마켓 &#183; {{ group.name }}
+      }
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title class="large">세컨드마켓</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  @for(product of (products$ | async); track product.id) {
+    <app-products-item [product]="product"></app-products-item>
+  }
+</ion-content>

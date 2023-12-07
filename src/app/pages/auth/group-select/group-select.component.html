@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button />
+    </ion-buttons>
+    <ion-title>세컨드마켓</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content slot="fixed" class="ion-padding">
+  <div class="wrapper">
+    <h2 class="title">메일 주소 입력</h2>
+    <ion-text color="medium">그룹(회사/학교 등) 메일 인증 후 이용할 수 있습니다.</ion-text>
+    <form [formGroup]="groupForm" (ngSubmit)="onSubmit()" class="content">
+      <ion-list class="ion-margin-top">
+        <ion-item>
+          <ion-select formControlName="group" required label="그룹" interface="popover" label-placement="floating"
+            placeholder="소속그룹을 선택해 주세요.">
+            @for (group of (groups$ | async); track group.id) {
+              <ion-select-option [value]="group.id">{{group.name}}</ion-select-option>
+            }
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-select formControlName="domain" required label="도메인" interface="popover" label-placement="floating"
+            placeholder="이메일 도메인을 선택해 주세요.">
+            @for (domain of (domains$ | async); track domain) {
+              <ion-select-option [value]="domain">&#64;{{ domain }}</ion-select-option>
+            }
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-input formControlName="account" required minlength="3" label="이메일" placeholder="이메일 계정을 입력해 주세요." labelPlacement="floating" />
+          <ion-text class="domain ion-margin-end">
+            @if (domain$ | async; as domain) {
+              &#64;{{  domain }}
+            }
+          </ion-text>
+        </ion-item>
+      </ion-list>
+      <ion-button type="submit" [disabled]="groupForm.invalid" color="success" expand="full" class="ion-margin-top">
+        인증 메일 보내기
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

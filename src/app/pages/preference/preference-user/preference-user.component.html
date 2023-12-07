@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      프로필 설정
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ng-container *ngIf="user$ | async as user">
+    <form
+      [formGroup]="profileForm"
+      (ngSubmit)="onSubmit()"
+      class="profile-form flex-grow">
+      <div class="w-10/12 max-w-xs mx-auto py-10">
+        <div class="relative w-32 h-32 mx-auto">
+          <div class="w-full h-full overflow-hidden rounded-full">
+            <ng-container *ngIf="image else userPlaceholder ">
+              <img
+                [src]="image | objectUrl | sanitizer:'url'"
+                alt="프로필이미지"
+                class="w-full h-full rounded-full object-cover">
+            </ng-container>
+            <ng-template #userPlaceholder>
+              <div
+                class="w-full h-full bg-gray-300 text-gray-700 rounded-full flex items-center justify-center text-4xl font-bold">
+                {{ user | userDisplayName:1 }}
+              </div>
+            </ng-template>
+
+            <!--              [style.transform]="'rotate(' + draftImage.context.rotate + 'deg)'"-->
+<!--            <img-->
+<!--              *ngIf="!draftImages[0] && user.photoURL"-->
+<!--              [src]="user.photoURL | objectUrl | sanitizer:'url'"-->
+<!--              alt="프로필이미지"-->
+<!--              class="w-full h-full rounded-full object-cover">-->
+
+<!--            <div class="absolute inset-x-0 inset-y-0">-->
+<!--              <button-->
+<!--                *ngIf="draftImages[0] as draftImage"-->
+<!--                type="button"-->
+<!--                class="flex w-full h-full justify-center items-center"-->
+<!--                (click)="onClickRotate(draftImage, 90)">-->
+<!--                <span class="w-12 h-12 p-2 rounded-full bg-black bg-opacity-25">-->
+<!--                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rotate-clockwise-2" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" fill="none" stroke-linecap="round" stroke-linejoin="round">-->
+<!--                    <path stroke="none" d="M0 0h24v24H0z"/>-->
+<!--                    <path d="M9 4.55a8 8 0 0 1 6 14.9m0 -4.45v5h5" />-->
+<!--                    <path d="M11 19.95a8 8 0 0 1 -5.3 -12.8" stroke-dasharray=".001 4.13" />-->
+<!--                  </svg>-->
+<!--                </span>-->
+<!--              </button>-->
+<!--              &lt;!&ndash; <button type="button" (click)="onCancelChangeFile($event)">취소</button> &ndash;&gt;-->
+<!--            </div>-->
+          </div>
+          <div class="absolute right-0 bottom-0 w-8 h-8 border border-white bg-green-600 rounded-full">
+            <div class="w-full h-full border border-white bg-green-600 rounded-full flex justify-center items-center text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+            </div>
+            <input
+              type="file"
+              accept="image/gif, image/jpeg, image/png"
+              (change)="onChangeFile($event)"
+              class="absolute left-0 top-0 w-full h-full border-none p-0 rounded-full opacity-0">
+          </div>
+        </div>
+        <div class="mt-4">
+          <label class="block pt-2 -mb-1 uppercase tracking-wide text-gray-600 text-xs" for="displayName">
+            닉네임
+          </label>
+          <input
+            id="displayName"
+            name="displayName"
+            type="text"
+            [value]="displayName"
+            formControlName="displayName"
+            placeholder="변경할 닉네임을 입력해주세요."
+            minlength="2"
+            maxlength="20"
+            required>
+        </div>
+        <div class="flex justify-between py-1 text-xs" *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)">
+          <p class="text-red-600 text-xs">변경할 닉네임을 입력해주세요.</p>
+        </div>
+        <div class="mt-2">
+          <button
+            type="submit"
+            [disabled]="profileForm.invalid"
+            class="block w-full h-12 btn border-green-600 bg-green-600">
+            변경하기
+          </button>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+<!--  <div class="bg-white p-safe-bottom">-->
+<!--    <div class="max-w-md mx-auto p-3 pb-6">-->
+<!--      <button type="button" class="block w-full text-center text-sm text-gray-600" (click)="onRemoveProfile()">{{ profile.email }} <span class="inline-block">연결 해제</span></button>-->
+<!--    </div>-->
+<!--  </div>-->
+</ion-content>

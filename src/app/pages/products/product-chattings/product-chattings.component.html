@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button>Back</ion-back-button>
+    </ion-buttons>
+    <ion-title>주고 받은 메시지</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding-vertical">
+  <ion-list>
+    @for (chatting of chattings$ | async; track chatting.id) {
+      <ion-item (click)="onClickChatting(chatting)">
+<!--        <ion-thumbnail slot="start">-->
+<!--          <img alt="" [src]="chatting.productPhotoURL" class="w-full h-full object-cover" />-->
+<!--        </ion-thumbnail>-->
+        <ion-avatar slot="start" class="w-10 h-10">
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <ion-label>
+          <div class="flex flex-col overflow-hidden">
+            <div class="mb-0.5 whitespace-pre-wrap text-ellipsis leading-tight"><ion-note color="midium" class="font-medium">{{ chatting.latest }}</ion-note></div>
+            <div class="text-xs leading-tight"><ion-text color="midium">{{ chatting.updated | fsTimestamp | distanceToNow }}</ion-text></div>
+          </div>
+        </ion-label>
+      </ion-item>
+    }
+  </ion-list>
+</ion-content>

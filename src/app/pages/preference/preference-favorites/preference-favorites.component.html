@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="font-bold text-lg text-gay-900 ellipsis">
+      @if (favorites$ | async; as favorites) {
+        관심 상품 {{ favorites.length }}개
+      }
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ng-container *ngIf="favorites$ | async as favorites">
+    <div *ngIf="favorites.length === 0" class="px-4 py-12 text-center text-gray-500 text-sm">
+      관심 상품이 없습니다.
+    </div>
+    <ul class="grid grid-cols-3 md:grid-cols-4 gap-px p-3">
+      <li *ngFor="let favorite of favorites">
+        <div class="relative square">
+          <a
+            class="absolute left-0 top-0 w-full h-full"
+            [routerLink]="['/preference', 'favorites', favorite.productId]">
+            <img
+              *ngIf="favorite.productImage as image"
+              [src]="image"
+              class="block w-full h-full object-cover"
+              alt="{{ favorite.productName }}">
+          </a>
+        </div>
+      </li>
+    </ul>
+  </ng-container>
+</ion-content>

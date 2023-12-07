@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="font-bold text-lg text-gay-900 ellipsis">
+      @if (messages$ | async; as messages) {
+        알림 {{ messages.length }}개
+      }
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ng-container *ngIf="messages$ | async as messages">
+    <div class="sticky-wrap">
+      <div *ngIf="messages.length === 0" class="px-4 py-12 text-center text-gray-500 text-sm">
+        새로운 알림이 없습니다.
+      </div>
+      <ul *ngIf="messages.length > 0" class="-mt-px border-t border-gray-300">
+        <li
+          class="relative border-b border-gray-300"
+          *ngFor="let message of messages trackBy: trackById; first as isFirst" [id]="message.id">
+          <a
+            class="flex justify-between items-start p-3"
+            [ngClass]="{'bg-gray-200': message.read}"
+            [routerLink]="['/products', message.contents.id]"
+            [fragment]="'comments/' + message.contents.id"
+            (click)="onClickMessage(message)">
+            <div class="mr-3">
+              <p class="mb-1 text-xs text-gray-600">
+                새 댓글이 달렸습니다.
+                <span class="text-gray-400">{{ message.created | fsTimestamp | distanceToNow }} 전</span>
+              </p>
+              <p class="text-sm text-gray-700 leading-tight">
+                <span class="text-green-900 opacity-50">
+                  {{ message.sender.displayName }}
+                </span>
+                {{ message.body }}
+              </p>
+            </div>
+            <img
+              *ngIf="message.image as image"
+              [src]="image"
+              alt=""
+              class="w-16 h-12 object-cover rounded-sm" >
+          </a>
+          <!-- <button
+            type="button"
+            class="absolute right-0 top-0 mr-2 mt-1 p-1 border-transparent bg-transparent"
+            (click)="onClickDeleteNotice(message, messageEl)">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#cbd5e0" width="16px" height="16px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+          </button> -->
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+</ion-content>

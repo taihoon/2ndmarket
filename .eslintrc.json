@@ -1,0 +1,90 @@
+{
+  "root": true,
+  "ignorePatterns": ["projects/**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.json"],
+        "createDefaultProgram": true
+      },
+      "plugins": [
+        "import",
+        "simple-import-sort"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "rules": {
+        "import/first": "error",
+        "import/newline-after-import": [
+          "error", { "count": 2 }
+        ],
+        "import/no-duplicates": "error",
+        "simple-import-sort/imports": [
+          "error",
+          {
+            "groups": [
+              [
+                "^\\u0000",
+                "^crypto-js",
+                "^lodash-es",
+                "^date-fns",
+                "^rxjs",
+                "^@capacitor/core",
+                "^@capacitor",
+                "^@ionic",
+                "^@angular/platform-browser",
+                "^@angular/core",
+                "^@angular/common",
+                "^@angular/service-worker",
+                "^@angular/fire",
+                "^@angular/router",
+                "^@angular/form",
+                "^@environments",
+                "^@app/core/model",
+                "^@app/core",
+                "^@app/shared/service",
+                "^@app/shared/directives",
+                "^@app/shared/pipe",
+                "^@app/shared",
+                "^@app/pages",
+                "^\\.",
+                "^"
+              ]
+            ]
+          }
+        ],
+        "simple-import-sort/exports": "error",
+        "@angular-eslint/component-class-suffix": [
+          "error",
+          {
+            "suffixes": ["Page", "Component"]
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {}
+    }
+  ]
+}

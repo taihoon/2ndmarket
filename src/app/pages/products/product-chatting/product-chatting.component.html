@@ -1,0 +1,117 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>메시지</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="flex flex-col justify-end h-full bg-gray-400">
+    <ul class="grow py-4 px-2">
+      @for (message of (messages$ | async); track message.id; let i = $index) {
+        <li>
+          <div class="flex" [class.flex-row-reverse]="message.uid === (user$ | async)?.uid">
+            @if (message.uid !== (user$ | async)?.uid) {
+              <div class="m-1 w-10 h-10 bg-gray-300 border border-white rounded-full shadow-outline flex items-center justify-center"
+                [class.opacity-0]="message.sameUidAsBefore && message.withinTime"
+              >
+                <ion-icon name="person-outline" class="w-6 h-6 text-gray-500 font-bold"></ion-icon>
+              </div>
+            }
+            <div class="flex flex-col">
+              @if (message.uid !== (user$ | async)?.uid && (!message.sameUidAsBefore || !message.withinTime)) {
+                <span class="mx-1 text-xs text-white">
+                  YOU
+                </span>
+              }
+              <div class="flex mb-1" [class.flex-row-reverse]="message.uid === (user$ | async)?.uid">
+                <p class="py-2 px-3 bg-gray-200 mx-1 max-w-sm break-all whitespace-pre-wrap rounded-xxlg leading-tight">{{ message.body }}</p>
+                @if (!message.sameUidAsAfter || !message.withinTime) {
+                  <div class="flex flex-shrink-0 items-end">
+                  <span class="text-xs flex-shrink-0 text-gray-500">
+                    {{ message.created | fsTimestamp | date:'HH:mm' }}
+                  </span>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </li>
+      }
+    </ul>
+    <form
+      [formGroup]="chattingForm"
+      (ngSubmit)="onSubmit()">
+      <div class="relative px-2 py-3 w-full flex bg-gray-100">
+        <div class="relative grow">
+          <div class="leading-tight whitespace-pre-wrap opacity-0">
+            {{ message.value }}
+          </div>
+          <div class="absolute inset-x-0 inset-y-0">
+            <textarea
+              class="px-3 py-1 w-full h-full border border-gray-300 bg-gray-200 leading-tight rounded-xxlg overflow-hidden"
+              formControlName="message"
+              minlength="2"
+              maxlength="200"
+              rows="1"
+              placeholder="메시지를 입력하세요"
+              required></textarea>
+          </div>
+        </div>
+        <div class="">
+          <button
+            type="submit"
+            class="w-full h-full p-1 border-transparent leading-tight text-green-700 flex justify-center items-center"
+            [ngClass]="{'opacity-70': chattingForm.invalid}"
+            [disabled]="chattingForm.invalid">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <g fill="none" fill-rule="evenodd">
+                <circle cx="12" cy="12" r="12" fill="#48BB78"/>
+                <g transform="translate(6 6)">
+                  <path stroke="#FFF" stroke-linecap="round" stroke-width="2" d="M4.5 10.357L0.5 5.367 4.452 0.357" transform="rotate(90 5.429 5.929)"/>
+                  <rect width="11" height="2" x=".5" y="5.5" fill="#FFF" rx=".933" transform="rotate(90 6 6.5)"/>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="py-2 px-3" style="display: none">
+    <form class="relative w-full pr-9"
+      [formGroup]="chattingForm"
+      (ngSubmit)="onSubmit()">
+      <div class="relative">
+        <div class="block w-full py-2 px-3 border leading-tight whitespace-pre-wrap opacity-0">
+          {{ message.value }}
+        </div>
+        <div class="absolute inset-x-0 inset-y-0">
+        <textarea
+          class="w-full h-full px-3 border border-gray-300 m-0 bg-gray-200 leading-tight rounded-xxlg"
+          formControlName="message"
+          minlength="2"
+          maxlength="200"
+          rows="1"
+          placeholder="메시지를 입력하세요"
+          required></textarea>
+        </div>
+      </div>
+      <div class="absolute right-0 top-0 w-9 h-9">
+        <button
+          type="submit"
+          class="w-full h-full p-1 border-transparent leading-tight text-green-700 flex justify-center items-center"
+          [ngClass]="{'opacity-50': chattingForm.invalid}"
+          [disabled]="chattingForm.invalid">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g fill="none" fill-rule="evenodd">
+              <circle cx="12" cy="12" r="12" fill="#48BB78"/>
+              <g transform="translate(6 6)">
+                <path stroke="#FFF" stroke-linecap="round" stroke-width="2" d="M4.5 10.357L0.5 5.367 4.452 0.357" transform="rotate(90 5.429 5.929)"/>
+                <rect width="11" height="2" x=".5" y="5.5" fill="#FFF" rx=".933" transform="rotate(90 6 6.5)"/>
+              </g>
+            </g>
+          </svg>
+        </button>
+      </div>
+    </form>
+  </div>
+</ion-content>

@@ -1,0 +1,46 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "chattings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "uids", "arrayConfig": "CONTAINS" },
+        { "fieldPath": "updated", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "chattings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "productId", "order":  "ASCENDING" },
+        { "fieldPath": "uids", "arrayConfig": "CONTAINS" },
+        { "fieldPath": "updated", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "comments",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "productId", "order":  "ASCENDING" },
+        { "fieldPath": "created", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "products",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "groupId", "order": "ASCENDING" },
+        { "fieldPath": "updated", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "products",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "uid", "order": "ASCENDING" },
+        { "fieldPath": "updated", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

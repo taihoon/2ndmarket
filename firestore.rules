@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth.uid != null;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    match /browsers/{browserId} {
+      allow read: if signedIn() && request.auth.uid in resource.data.users;
+      allow write: if signedIn();
+    }
+    match /chattings/{chattingId} {
+      function chatting() {
+        return get(/databases/$(database)/documents/chattings/$(chattingId));
+      }
+
+      allow read: if signedIn() && request.auth.uid in resource.data.uids;
+      allow write: if signedIn();
+
+      match /messages/{messageId} {
+        allow read: if signedIn() && request.auth.uid in chatting().data.uids;
+        allow write: if signedIn() && request.auth.uid in chatting().data.uids;
+      }
+    }
+    match /favorites/{favoriteId} {
+      allow read: if true;
+      allow create: if signedIn();
+      allow update, delete: if request.auth.uid == resource.data.uid;
+    }
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update: if signedIn();
+      allow delete: if request.auth.uid == resource.data.uid;
+    }
+    match /comments/{commentId} {
+      allow read: if true;
+      allow create: if signedIn();
+      allow update, delete: if request.auth.uid == resource.data.uid;
+    }
+    match /groups/{groupId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /userGroups/{userGroupId} {
+      allow read, create: if signedIn();
+      allow update, delete: if request.auth.uid == userGroupId;
+    }
+    match /verifications/{verificationId} {
+      allow read, write: if true;
+    }
+  }
+}

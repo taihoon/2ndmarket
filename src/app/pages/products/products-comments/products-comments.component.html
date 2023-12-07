@@ -1,0 +1,92 @@
+<div *ngIf="user$ | async as user" class="p-3">
+  @if (commentUserCount$ | async; as count) {
+    <p class="text-blue-900 text-xs opacity-50">
+      @if (count > 0) {
+        {{ count }}명의 유저가 이 상품에 대한 이야기를 나누고 있습니다.
+      } @else {
+        이 상품에 대한 이야기가 없습니다.
+      }
+    </p>
+  }
+  <ul *ngIf="commentsByProfile$ | async as commentsByProfile">
+    <li
+      *ngFor="let comments of commentsByProfile trackBy: trackByIndex"
+      class="select-none py-1">
+      <div
+        class="flex -mx-1"
+        *ngFor="let comment of comments trackBy: trackById; first as isFirst; last as isLast"
+        [ngClass]="{'flex-row-reverse': comment.uid === user.uid}">
+        <div
+          *ngIf="comment.uid !== user.uid"
+          class="w-10 h-10 m-1 border border-white bg-gray-300 text-gray-700 rounded-full flex items-center justify-center text-sm font-bold"
+          [ngClass]="{'opacity-0': !isFirst, '-my-1': !isFirst, 'shadow-outline': comment.uid === product.uid}">
+          <img *ngIf="comment.userPhotoURL" [src]="comment.userPhotoURL" [alt]="comment.userDisplayName" class="w-full h-full rounded-full object-cover">
+          <span *ngIf="!comment.userPhotoURL">{{ comment.userDisplayName.slice(0, 1) }}</span>
+        </div>
+        <div
+          class="flex flex-col"
+          [ngClass]="{'items-end': comment.uid === user.uid}"
+          style="max-width: 75%;">
+          <span *ngIf="isFirst" class="mx-1 text-xs text-white">
+            {{ comment.userDisplayName }}
+            {{ comment.uid === product.uid && comment.uid !== user.uid ? '(판매자)' : '' }}
+          </span>
+          <div
+            class="flex mb-1"
+            [ngClass]="{'flex-row-reverse': comment.uid === user.uid}">
+            <p
+              appLongpress
+              (longpress)="onDelete(comment)"
+              class="py-2 px-3 bg-gray-200 mx-1 max-w-sm break-all whitespace-pre-wrap rounded-xxlg leading-tight"
+              [ngClass]="{
+              'rounded-tl-none': comment.uid !== user.uid,
+              'rounded-bl-none': comment.uid !== user.uid && !isLast,
+              'rounded-bl-xlg': comment.uid !== user.uid && isLast,
+              'rounded-tr-none': comment.uid === user.uid,
+              'rounded-br-none': comment.uid === user.uid && !isLast,
+              'rounded-br-xlg': comment.uid === user.uid && isLast
+            }">{{ comment.body }}</p>
+            <div *ngIf="isLast && comment.created" class="flex flex-shrink-0 items-end">
+              <span class="text-xs flex-shrink-0 text-gray-500">{{ comment.created | fsTimestamp | date:'HH:mm' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li *ngIf="product.soldOut" class="select-none py-1">
+      <div
+        class="flex -mx-1"
+        [ngClass]="{'flex-row-reverse': product.uid === user.uid}">
+        <div
+          class="w-10 h-10 m-1 border border-white bg-gray-300 text-gray-700 rounded-full flex items-center justify-center text-sm font-bold"
+          [ngClass]="{'shadow-outline': product.uid !== user.uid}"
+          *ngIf="product.uid !== user.uid">
+          <img *ngIf="product.userPhotoURL" [src]="product.userPhotoURL" [alt]="product.userDisplayName" class="w-full h-full rounded-full object-cover">
+          <span *ngIf="!product.userPhotoURL">{{ product.userDisplayName.slice(0, 1) }}</span>
+        </div>
+        <div
+          class="flex flex-col"
+          [ngClass]="{'items-end': product.uid === user.uid}"
+          style="max-width: 75%;">
+          <span class="mx-1 text-xs text-white">
+            {{ product.userDisplayName }}
+            {{ product.uid !== user.uid ? '(판매자)' : '' }}
+          </span>
+          <div
+            class="flex mb-1"
+            [ngClass]="{'flex-row-reverse': product.uid === user.uid}">
+            <p
+              class="py-2 px-3 mx-1 max-w-sm break-all whitespace-pre-wrap rounded-xxlg leading-tight bg-white"
+              [ngClass]="{
+              'rounded-tl-none rounded-bl-none rounded-bl-xlg': product.uid !== user.uid,
+              'rounded-tr-none rounded-br-none rounded-br-xlg': product.uid === user.uid
+            }">팔렸어요.</p>
+            <div class="flex flex-shrink-0 items-end">
+              <span class="text-xs flex-shrink-0 text-gray-500">{{ product.soldOut | fsTimestamp | date:'HH:mm' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

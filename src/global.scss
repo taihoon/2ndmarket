@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+@import "app/app.component";
+
+body {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+//html.ios ion-modal ion-toolbar {
+//  padding-right: calc(var(--ion-safe-area-right) + 0);
+//  padding-left: calc(var(--ion-safe-area-left) + 0);
+//}

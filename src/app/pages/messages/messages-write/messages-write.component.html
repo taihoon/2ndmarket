@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ product.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="messages">
+    <div class="body relative">
+      <app-products-comments [product]="product"></app-products-comments>
+    </div>
+    <div class="border-t border-gray-400 bg-white">
+      <app-products-comment-form [product]="product"></app-products-comment-form>
+    </div>
+  </div>
+</ion-content>

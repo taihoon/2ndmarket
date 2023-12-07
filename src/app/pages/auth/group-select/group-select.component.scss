@@ -1,0 +1,19 @@
+h2.title {
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.wrapper {
+  height: 100%;
+  background-image: url('/assets/ems-image.png');
+  background-repeat: no-repeat;
+  background-position: center 100%;
+  background-size: contain;
+}
+
+.domain {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  bottom: 50%;
+}

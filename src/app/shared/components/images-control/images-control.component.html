@@ -1,0 +1,103 @@
+<div class="py-3">
+  <ol class="product-images product-images-ordering">
+    <li
+      *ngFor="let image of images; let i = index; first as isFirst; last as isLast"
+      class="relative border border-white">
+      <div
+        class="attachImage"
+        [ngClass]="{
+          'selected': image === selected,
+          'unselected': image !== selected
+        }">
+<!--        [style.transform]="'rotate(' + image.rotate + 'deg)'"-->
+        <img
+          role="button"
+          tabindex="0"
+          [src]="($any(image).url || image) | objectUrl | sanitizer: 'url'"
+          (click)="onToggleSelectImage(image)"
+          alt="" class="image">
+      </div>
+      <div
+        *ngIf="image === selected"
+        class="fixed left-0 right-0 bottom-0 p-safe-bottom border-t border-gray-400 bg-white z-30">
+        <div class="flex max-w-md mx-auto items-center" style="height: 47px;">
+          <button
+            type="button"
+            class="border-white flex-grow flex justify-center items-center"
+            [disabled]="isFirst"
+            (click)="onClickMoveImage(image, i, i - 1)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2f855a" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z"/>
+              <polyline points="15 6 9 12 15 18" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="border-white flex-grow flex justify-center items-center"
+            [disabled]="isLast"
+            (click)="onClickMoveImage(image, i, i + 1)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2f855a" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z"/>
+              <polyline points="9 6 15 12 9 18" />
+            </svg>
+          </button>
+<!--          <button-->
+<!--            type="button"-->
+<!--            class="border-white flex-grow flex justify-center items-center"-->
+<!--            (click)="onClickRotateImage(draft, 90)">-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rotate-clockwise-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2f855a" fill="none" stroke-linecap="round" stroke-linejoin="round">-->
+<!--              <path stroke="none" d="M0 0h24v24H0z"/>-->
+<!--              <path d="M9 4.55a8 8 0 0 1 6 14.9m0 -4.45v5h5" />-->
+<!--              <path d="M11 19.95a8 8 0 0 1 -5.3 -12.8" stroke-dasharray=".001 4.13" />-->
+<!--            </svg>-->
+<!--          </button>-->
+          <button
+            type="button"
+            class="border-white flex-grow flex justify-center items-center"
+            (click)="onClickDeleteImage(image)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2f855a" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z"/>
+              <line x1="4" y1="7" x2="20" y2="7" />
+              <line x1="10" y1="11" x2="10" y2="17" />
+              <line x1="14" y1="11" x2="14" y2="17" />
+              <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+              <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="border-white flex-grow flex justify-center items-center"
+            (click)="onBlurImage()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2f855a" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z"/>
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </li>
+  </ol>
+  <div class="relative border border-white bg-gray-500">
+    <div class="flex justify-center items-center h-12 p-1 text-white">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z"/>
+        <line x1="12" y1="5" x2="12" y2="19" />
+        <line x1="5" y1="12" x2="19" y2="12" />
+      </svg>
+      이미지 추가하기
+    </div>
+    <button
+      type="button"
+      class="absolute left-0 top-0 w-full h-full border-none opacity-0"
+      (click)="onClickFile()"
+    ></button>
+<!--    <input-->
+<!--      type="file"-->
+<!--      accept="image/gif, image/jpeg, image/png, image/webp"-->
+<!--      class="absolute left-0 top-0 w-full h-full border-none opacity-0"-->
+<!--      multiple-->
+<!--      (click)="onClickFile($event)"-->
+<!--      (change)="onChangeFile($event)">-->
+  </div>
+</div>

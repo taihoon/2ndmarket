@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button />
+    </ion-buttons>
+    <ion-title>세컨드마켓</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content slot="fixed" class="ion-padding">
+  <div class="wrapper">
+    <h2 class="title">인증 메일을 보냈습니다.</h2>
+    <ion-text color="medium">
+      메일에 있는 인증 번호 입력해 주세요.<br>
+      받지 못했다면 재전송 버튼을 다시 눌러주세요.
+    </ion-text>
+    <form [formGroup]="verifyForm" (ngSubmit)="onSubmit()">
+      <ion-list class="ion-margin-top">
+        <ion-item>
+          <ion-input formControlName="email" required label="이메일" labelPlacement="floating" />
+        </ion-item>
+        <ion-item>
+          <ion-input formControlName="code" type="tel" required label="인증코드" maxlength="4" labelPlacement="floating" />
+          <ion-text color="medium" class="code ion-margin-end">
+            <span appTimer (timeend)="onTimerEnd()"></span>
+          </ion-text>
+        </ion-item>
+      </ion-list>
+      <ion-button type="submit" [disabled]="timeEnd || verifyForm.invalid" color="success" expand="full" class="ion-margin-top">
+        인증
+      </ion-button>
+    </form>
+    <div class="ion-padding-horizontal ion-padding-bottom retry">
+      <ion-button color="medium" expand="full" (click)="onClickRetryValidate()" >
+        인증 메일 재전송
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

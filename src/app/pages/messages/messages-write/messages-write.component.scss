@@ -1,0 +1,14 @@
+ion-content {
+  --background: rgb(156 163 175);
+}
+
+.messages {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.body {
+  flex-grow: 1
+}
+

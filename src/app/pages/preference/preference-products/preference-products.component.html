@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="font-bold text-lg text-gay-900 ellipsis">
+      @if (products$ | async; as products) {
+        등록한 상품 {{ products.length }}개
+      }
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ng-container *ngIf="products$ | async as products">
+    <div class="sticky-wrap">
+      <div *ngIf="products.length === 0" class="px-4 py-12 text-center text-gray-500 text-sm">
+        등록한 상품이 없습니다.
+      </div>
+      <ul *ngIf="products.length > 0" class="grid grid-cols-3 md:grid-cols-4 gap-px p-3">
+        <li *ngFor="let product of products; trackBy: trackById">
+          <div class="relative square">
+            <a
+              class="absolute left-0 top-0 w-full h-full"
+              [routerLink]="['/preference', 'products', product.id]">
+              <img
+                *ngIf="product.images[0] as image"
+                [src]="image"
+                class="block w-full h-full object-cover"
+                [ngClass]="{'opacity-50': product.soldOut}"
+                alt="{{ product.name }}">
+              <span
+                *ngIf="product.soldOut"
+                class="absolute left-0 top-0 m-1 bg-black bg-opacity-75 rounded-md text-xs text-white px-2 py-1 pointer-events-none">
+                거래완료
+              </span>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+</ion-content>

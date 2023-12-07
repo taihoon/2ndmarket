@@ -1,0 +1,11 @@
+<ion-app>
+  <ion-router-outlet></ion-router-outlet>
+</ion-app>
+
+@if((backdropService.backdrop$ | async)?.visible) {
+  <div style="height:100vh;display:flex;justify-content:center;align-items:center">
+    <ion-spinner name="lines-sharp" style="width:34px;height:34px;"></ion-spinner>
+  </div>
+  <ion-backdrop style="background:var(--ion-color-dark);opacity:0.3"></ion-backdrop>
+}
+

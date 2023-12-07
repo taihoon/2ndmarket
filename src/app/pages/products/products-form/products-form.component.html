@@ -1,0 +1,198 @@
+<div class="py-3 px-3">
+  <form
+  class="relative w-full"
+  [formGroup]="productForm" > <!-- (ngSubmit)="onSubmit()" -->
+  <div class="form-row mb-3">
+    <div class="form-col w-full">
+      <div>
+        <label class="block pt-2 -mb-1 uppercase tracking-wide text-gray-600 text-xs" for="name">
+          상품명
+        </label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="상품명을 입력해 주세요."
+          minlength="2"
+          maxlength="200"
+          required>
+      </div>
+      <div class="flex justify-between py-1" *ngIf="name.invalid && (name.dirty || name.touched)">
+        <p class="text-red-600 text-xs leading-tight">상품명을 입력해 주세요.</p>
+      </div>
+    </div>
+  </div>
+  <div class="form-row mb-3">
+    <div class="form-col w-1/2">
+      <div>
+        <label class="block pt-2 -mb-1 uppercase tracking-wide text-gray-600 text-xs" for="purchased">
+          구매시기
+        </label>
+        <div class="relative">
+          <select
+            id="purchased"
+            formControlName="purchased"
+            required>
+            <option [ngValue]="null">구매시기</option>
+            <option value="unknown">모름</option>
+            <option value="week">일주일 이내</option>
+            <option value="month">한 달 이내</option>
+            <option value="threeMonth">3 개월 이내</option>
+            <option value="year">1 년 이내</option>
+            <option value="longAgo">오래전</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-between py-1" *ngIf="purchased.invalid && (purchased.dirty || purchased.touched)">
+        <p class="text-red-600 text-xs leading-tight">구매시기를 선택해 주세요.</p>
+      </div>
+    </div>
+    <div class="form-col w-1/2">
+      <div>
+        <label class="block pt-2 -mb-1 uppercase tracking-wide text-gray-600 text-xs" for="condition">
+          상태
+        </label>
+        <div class="relative">
+          <select
+            id="condition"
+            formControlName="condition"
+            required>
+            <option ngValue="">상태</option>
+            <option value="boxed">미개봉</option>
+            <option value="almostNew">거의 새 상품</option>
+            <option value="used">사용감 있음</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-between py-1" *ngIf="condition.invalid && (condition.dirty || condition.touched)">
+        <p class="text-red-600 text-xs leading-tight">상품의 상태를 선택해 주세요.</p>
+      </div>
+    </div>
+  </div>
+  <div class="form-row mb-3">
+    <div class="w-full px-1">
+      <div>
+        <label class="block pt-2 -mb-1 uppercase tracking-wide text-gray-600 text-xs" for="priceDecimal">
+          판매금액
+        </label>
+        <div class="relative">
+          <input
+            [appValueToDecimal]="price"
+            id="priceDecimal"
+            type="tel"
+            placeholder="판매금액을 입력해 주세요."
+            min="0"
+            minlength="1"
+            maxlength="10"
+            required>
+          <input
+            id="price"
+            type="number"
+            formControlName="price"
+            class="sr-only"
+            required
+          />
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            원
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-between py-1" *ngIf="price.invalid && (price.dirty || price.touched)">
+        <p class="text-red-600 text-xs leading-tight">판매할 금액을 적어주세요.</p>
+      </div>
+    </div>
+  </div>
+  <div class="form-row mb-3">
+    <div class="form-col w-full">
+      <div>
+        <label class="block pt-2 -mb-1 uppercase tracking-wide text-gray-600 text-xs" for="shipping">
+          거래방법
+        </label>
+        <div class="relative">
+          <select
+            id="shipping"
+            formControlName="shipping"
+            required>
+            <option value="">거래방법</option>
+            <option value="directly">직거래만 가능</option>
+            <option value="delivery">택배만 가능</option>
+            <option value="all">직거래, 택배 모두 가능</option>
+            <option value="etc">기타</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-between py-1" *ngIf="shipping.invalid && (shipping.dirty || shipping.touched)">
+        <p class="text-red-600 text-xs leading-tight">거래방법을 선택해 주세요.</p>
+      </div>
+    </div>
+  </div>
+  <div class="form-row mb-3">
+    <div class="form-col w-full">
+      <div>
+        <span class="block pt-2 -mb-1 uppercase tracking-wide text-gray-600 text-xs">
+          첨부 이미지(최대 {{ maxImageCount }}장)
+        </span>
+        <app-images-control [images]="images" [maxCount]="maxImageCount">
+        </app-images-control>
+      </div>
+    </div>
+  </div>
+  <div class="form-row mb-3">
+    <div class="form-col w-full">
+      <div>
+        <label class="block pt-2 -mb-1 uppercase tracking-wide text-gray-600 text-xs" for="contact">
+          연락처
+        </label>
+        <input
+          id="contact"
+          type="text"
+          formControlName="contact"
+          placeholder="연락처"
+          minlength="2"
+          maxlength="200"
+          required>
+      </div>
+      <div class="flex justify-between py-1" *ngIf="contact && contact.invalid && (contact.dirty || contact.touched)">
+        <p class="text-red-600 text-xs leading-tight">연락처를 적어주세요.</p>
+      </div>
+    </div>
+  </div>
+  <div class="form-row mb-3">
+    <div class="form-col w-full">
+      <div>
+        <label class="block pt-2 -mb-1 uppercase tracking-wide text-gray-600 text-xs" for="memo">
+          상품 설명
+        </label>
+        <div class="relative">
+          <div class="block w-full py-2 px-3 opacity-0 whitespace-pre-wrap" style="min-height: 5rem">
+            {{ memo.value }}
+          </div>
+          <div class="absolute left-0 right-0 top-0 bottom-0">
+            <textarea
+              class="h-full"
+              id="memo"
+              formControlName="memo"
+              placeholder="상품 설명을 적어주세요."
+              rows="10"
+              minlength="2"
+              maxlength="2000"
+              required></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-between py-1" *ngIf="memo.invalid && (memo.dirty || memo.touched)">
+        <p class="text-red-600 text-xs leading-tight">상품 설명을 적어주세요.</p>
+      </div>
+    </div>
+  </div>
+</form>
+</div>

@@ -1,0 +1,30 @@
+<ion-card [routerLink]="['/products', product.id]" [class.soldOut]="product.soldOut">
+  <div class="hero">
+    <img [src]="product.images[0]" [alt]="product.name" />
+    @if (product.soldOut) {
+      <div class="soldOut">거래완료</div>
+    }
+    <div class="price">{{ product.price | number:'2.' }}</div>
+    <div class="price-shadow">{{ product.price | number:'2.' }}</div>
+  </div>
+  <ion-card-header class="header">
+    <ion-card-title>{{ product.name }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <div class="info">
+      {{ product.created | fsTimestamp | distanceToNow }} 전
+      &middot; {{ product.condition | productCondition }}
+      &middot; {{ product.purchased | productPurchased }}
+    </div>
+    <div class="count">
+      <span class="count-item">
+        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+        <span class="amount comment">{{ product.commentsCnt }}</span>
+      </span>
+      <span class="count-item">
+        <ion-icon name="bookmark-outline"></ion-icon>
+        <span class="amount favorite">{{ product.favoritesCnt }}</span>
+      </span>
+    </div>
+  </ion-card-content>
+</ion-card>

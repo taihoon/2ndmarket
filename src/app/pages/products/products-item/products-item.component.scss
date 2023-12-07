@@ -1,0 +1,96 @@
+ion-card {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-inline: 16px;
+}
+
+ion-card.soldOut {
+  opacity: .5;
+}
+
+.hero {
+  position: relative;
+}
+
+.hero img {
+  object-fit: cover;
+  aspect-ratio: 16/9;
+}
+
+.hero .soldOut {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0.25rem 0.5rem;
+  color: #fff;
+  background-color: #000;
+  opacity: .75;
+}
+
+.hero .price,
+.hero .price-shadow {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  letter-spacing: 0.025em;
+  color: #000;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-style: italic;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.hero .price {
+  padding-top: 1px;
+  background-color: rgba(0, 0, 0, .5);
+}
+
+.hero .price-shadow {
+  color: #fff;
+  padding-bottom: 1px;
+  padding-right: 1px;
+  margin-right: 0.75rem;
+}
+
+ion-card-header {
+  padding-top: 12px;
+  padding-bottom: 6px;
+  padding-inline: 12px;
+}
+
+ion-card-title {
+  font-size: 1.25rem;
+  font-weight: normal;
+}
+
+ion-card-content {
+  padding-inline: 12px;
+  padding-bottom: 14px;
+  font-size: 0.875rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.count {
+  display: flex;
+  align-items: center;
+}
+
+.count .count-item ion-icon {
+  font-size: 1rem;
+  vertical-align: middle;
+  margin-top: -1px;
+}
+
+.count .count-item .amount {
+  padding-left: 0.1rem;
+}
+
+.count .count-item .comment {
+  margin-right: 0.5rem;
+}
+
+

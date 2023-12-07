@@ -1,0 +1,31 @@
+<div class="ion-page">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="onClickCancel()">취소</ion-button>
+      </ion-buttons>
+      <ion-title>상품 수정</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="onClickConfirm()" [strong]="true">저장</ion-button>
+      </ion-buttons>
+      @if (uploaded$ | async; as uploaded) {
+        <ion-progress-bar [value]="uploaded"></ion-progress-bar>
+      }
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <app-products-form
+      *ngIf="productFormData$ | async as productFormData"
+      [product]="productFormData.product"
+      [images]="productFormData.images"
+    >
+    </app-products-form>
+  </ion-content>
+</div>
+
+@if (submitting) {
+  <ion-backdrop tappable="false"></ion-backdrop>
+  <div class="spinner">
+    <ion-spinner name="lines-sharp" style="width:34px;height:34px;"></ion-spinner>
+  </div>
+}

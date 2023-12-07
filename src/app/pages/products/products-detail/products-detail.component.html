@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      @if (product$ | async; as product) {
+        {{ product.name }}
+      }
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button>Back</ion-back-button>
+    </ion-buttons>
+    <ion-buttons [collapse]="true" slot="end">
+      @if (owner$ | async) {
+        <ion-icon (click)="onClickMenu()" slot="icon-only" name="ellipsis-horizontal"></ion-icon>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title class="large">
+        @if (product$ | async; as product) {
+          {{ product.name }}
+        }
+      </ion-title>
+      <ion-buttons [collapse]="true" slot="end">
+        @if (owner$ | async) {
+          <ion-button (click)="onClickMenu()">수정</ion-button>
+        }
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <div class="hero">
+    @if (product$ | async; as product) {
+      <img [src]="product.images[0]" />
+    }
+    @if ((product$ | async)?.soldOut) {
+      <div class="soldOut">거래완료</div>
+    }
+  </div>
+  <div class="info ion-padding">
+    <div class="count">
+      @if(product$ | async; as product) {
+        <div class="comment">
+          <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+          <span class="number">{{ product.commentsCnt }}</span>
+        </div>
+        <button class="favorite" [class.strong]="favorite$ | async" (click)="onClickFavorite2()">
+          <ion-icon name="bookmark-outline"></ion-icon>
+          <span class="number">{{ product.favoritesCnt }}</span>
+        </button>
+      }
+    </div>
+    <div class="price-date">
+      @if(product$ | async; as product) {
+        <div class="price"><strong>{{ product.price | number:'1.0-0' }}</strong>원</div>
+        <div class="date">등록일 {{ product.created | fsTimestamp | date:'yyyy.MM.dd HH:mm' }}</div>
+      }
+    </div>
+  </div>
+  @if (product$ | async) {
+    <div class="line ion-margin-horizontal"></div>
+  }
+  <div class="desc ion-padding">
+    @if (product$ | async; as product) {
+      <div class="memo" [innerHTML]="product.memo | linkify"></div>
+      <br />
+      <ul>
+        <li>- 제품상태: {{ product.condition | productCondition }}</li>
+        <li>- 구매시기: {{ product.purchased | productPurchased }}</li>
+      </ul>
+    }
+  </div>
+  <ul class="images product-images ion-padding">
+    @for (image of (product$ | async)?.images; track $index) {
+      <li class="image-wrap relative border border-white">
+        <a (click)="onClickImage($index)">
+          <div class="attachImage">
+            <img [src]="image" class="image" alt="">
+          </div>
+        </a>
+      </li>
+    }
+  </ul>
+  @if (product$ | async) {
+    <div class="line"></div>
+  }
+  <div class="user ion-padding">
+    @if (product$ | async; as product) {
+      <div class="photo">
+        @if (product.userPhotoURL) {
+          <img [src]="product.userPhotoURL" alt="" *ngIf="product.userPhotoURL">
+        }@else {
+          <span>{{ product.userDisplayName.slice(0, 1) }}</span>
+        }
+      </div>
+      <div class="profile">
+        <div class="name">{{ product.userDisplayName }}</div>
+        <div class="contact">{{ product.contact }}</div>
+      </div>
+        @if (product$ | async; as product) {
+          @if (user$ | async; as user) {
+            <div class="chatting">
+              @if (product.uid !== user.uid ) {
+                <ion-button (click)="onClickChatting(product)" color="success">
+                  <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                </ion-button>
+              } @else {
+                <ion-button [routerLink]="['./chattings']" color="success">
+                  <ion-icon name="chatbubbles-outline"></ion-icon>
+                </ion-button>
+              }
+            </div>
+          }
+        }
+    }
+  </div>
+</ion-content>
